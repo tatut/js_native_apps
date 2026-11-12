@@ -1,0 +1,3 @@
+[submodule "3_quickjs_microui/res2h"]
+	path = 3_quickjs_microui/res2h
+	url = git@github.com:tatut/res2h.git

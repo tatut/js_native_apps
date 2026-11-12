@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <script src="swipl-bundle.js"></script>
+    <script src="morphdom.js"></script>
+    <link rel="stylesheet" href="todomvc.css">
+    <script>
+    new SWIPL({}).then((ok,_) => {
+        P = ok.prolog;
+        _P = t => P.call(t);
+        hash = _=>_P("on_hash_change(\""+window.location.hash+"\")");
+        P.consult("todo").then(_=>hash());
+        window.onhashchange = hash;
+        document.querySelector(".new-todo").focus();
+    });
+
+      _renderReq=null;
+      function render() {
+          if(_renderReq != null) return;
+          _renderReq = requestAnimationFrame(_doRender);
+      }
+      function _doRender() {
+          _renderReq = null;
+          P.call("render.");
+      }
+    </script>
+    <title>Prolog TodoMVC</title>
+  </head>
+  <body>
+    <section class="todoapp">
+      <header class="header">
+        <h1>?- todos.</h1>
+        <input class="new-todo" placeholder="Destroy with FACTS and LOGIC?" autofocus
+               onkeypress="if(window.event.key=='Enter') P.call('add_todo')">
+      </header>
+
+      <!-- hidden by default, shown when rendered by app -->
+      <section id="app" class="main" style="visibility: hidden;">
+      </section>
+
+      <footer id="footer" class="footer" style="visibility: hidden;">
+      </footer>
+  </body>
+</html>
