@@ -93,7 +93,7 @@ void *hot_reload_thread(void *app_ptr) {
       app->m_obj = JS_GetProperty(app->js, global, app->main_name);
       ui_js_bind(js);
       const char *m_str = JS_ToCString(app->js, app->m_obj);
-      printf("new main m_str: %s\n", m_str);
+      printf("RELOADED!\n");
       JS_FreeCString(app->js, m_str);
       free(src);
       loaded = st.st_mtime;
@@ -143,7 +143,7 @@ void load_app_js(App *app) {
   size_t len;
   get_resource("app.js", &len, (uint8_t**)&src);
   JS_Eval(ctx, src, len, "app.js", JS_EVAL_TYPE_GLOBAL);
-  printf("GOT APP JS\n-------\n%.*s\n----------\n", len, src);
+  //printf("GOT APP JS\n-------\n%.*s\n----------\n", len, src);
 }
 #endif
 
